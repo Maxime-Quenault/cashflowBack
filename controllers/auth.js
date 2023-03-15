@@ -83,3 +83,7 @@ export const getUserData = async (req, res) => {
     const user = await ProfileModel.findById(req.user);
     res.json({ user: user._doc, token: req.token });
 };
+
+export const getHelloWorld = async (req, res) => {
+    res.status(200).json({msg: "Hello World !"});
+};

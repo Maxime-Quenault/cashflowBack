@@ -1,4 +1,6 @@
 import express from 'express';
+import { signUp, signIn, tokenIsValid, getUserData, getHelloWorld } from './controllers/auth.js';
+import { auth } from './middlewares/auth.js';
 
 const router = express.Router();
 
@@ -15,5 +17,6 @@ router.post("/auth/signup", signUp);
 router.post("/auth/signin", signIn);
 router.post("/auth/tokenIsValid", tokenIsValid);
 router.get("/auth", auth, getUserData);
+router.get("/getHelloWorld", getHelloWorld);
 
 export default router;
