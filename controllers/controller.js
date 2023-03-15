@@ -89,19 +89,22 @@ export const getHelloWorld = async (req, res) => {
 };
 
 export const getProfile = async (req, res) => {
-    const profiles = await ProfileModel.find();
-    res.status(200).json(profiles);
+    res.status(200).json({msg: "Hello World !"});
+    // const profiles = await ProfileModel.find();
+    // res.status(200).json(profiles);
 }
 
 export const setProfile = async (req, res) => {
-    try{
-        const {pseudo, password, devise, solde} = req.body;
-        const profile = new ProfileModel({pseudo, password, devise, solde});
-        await profile.save();
-        res.send('Nouvel objet ajouté à la base de données');
-    }catch (err){
-        console.error(err);
-        res.status(500).json({error : err.message});
-    }
+
+    res.status(200).json({msg: "Hello World !"});
+    // try{
+    //     const {pseudo, password, devise, solde} = req.body;
+    //     const profile = new ProfileModel({pseudo, password, devise, solde});
+    //     await profile.save();
+    //     res.send('Nouvel objet ajouté à la base de données');
+    // }catch (err){
+    //     console.error(err);
+    //     res.status(500).json({error : err.message});
+    // }
     
 }
