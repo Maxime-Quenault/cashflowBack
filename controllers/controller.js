@@ -87,3 +87,8 @@ export const getUserData = async (req, res) => {
 export const getHelloWorld = async (req, res) => {
     res.status(200).json({msg: "Hello World !"});
 };
+
+export const getProfile = async (req, res) => {
+    const profiles = await ProfileModel.find();
+    res.status(200).json(profiles);
+}
