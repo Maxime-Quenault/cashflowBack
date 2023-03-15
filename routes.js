@@ -17,6 +17,7 @@ router.post("/auth/signup", signUp);
 router.post("/auth/signin", signIn);
 router.post("/auth/tokenIsValid", tokenIsValid);
 router.get("/auth", auth, getUserData);
+router.get("/helloworld", getHelloWorld);
 router.get("/getprofiles", getProfiles);
 router.post("/setprofile", setProfile);
 
