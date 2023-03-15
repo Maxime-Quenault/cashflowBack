@@ -18,5 +18,6 @@ router.post("/auth/signin", signIn);
 router.post("/auth/tokenIsValid", tokenIsValid);
 router.get("/auth", auth, getUserData);
 router.get("/getprofiles", getProfiles);
+router.post("/setprofile", setProfile);
 
 export default router;
