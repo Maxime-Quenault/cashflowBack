@@ -89,9 +89,9 @@ export const getHelloWorld = async (req, res) => {
 };
 
 export const getProfile = async (req, res) => {
-    res.status(200).json({msg: "Hello World !"});
-    // const profiles = await ProfileModel.find();
-    // res.status(200).json(profiles);
+    //res.status(200).json({msg: "Hello World !"});
+    const profiles = await ProfileModel.find();
+    res.status(200).json(profiles);
 }
 
 export const setProfile = async (req, res) => {
