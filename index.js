@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import express from "express";
 import mongoose from "mongoose";
+import ProfileModel from "../models/profile.model.js";
 
 import myRoutes from "./routes.js";
 
@@ -20,5 +21,8 @@ mongoose
         app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));
     })
     .catch((error) => console.log(`${error} did not connect`));
+
+    const result = await ProfileModel.find()
+    console.log(result)
 
 export default app;
