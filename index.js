@@ -1,10 +1,9 @@
 import 'dotenv/config'
 import express from "express";
 import mongoose from "mongoose";
-
 import myRoutes from "./routes.js";
 
-const app = express()
+const app = express();
 
 app.use(express.json());
 

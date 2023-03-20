@@ -4,28 +4,22 @@ import jwt from "jsonwebtoken";
 
 export const signUp = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const {pseudo, password, devise, solde} = req.body;
 
-        const existingUserWithUsername = await ProfileModel.findOne({ username });
+        const existingUserWithUsername = await ProfileModel.findOne({ pseudo: pseudo });
         if (existingUserWithUsername) {
             return res
                 .status(400)
                 .json({ msg: "Pseudo déjà utilisé." });
         }
 
-        const existingUserWithEmail = await ProfileModel.findOne({ email });
-        if (existingUserWithEmail) {
-            return res
-                .status(400)
-                .json({ msg: "Email déjà utilisé." });
-        }
-
         const hashedPassword = await bcryptjs.hash(password, 8);
 
         let user = new ProfileModel({
-            username,
-            email,
+            pseudo,
             password: hashedPassword,
+            devise,
+            solde,
         });
         user = await user.save();
         res.json(user);
@@ -36,11 +30,9 @@ export const signUp = async (req, res) => {
 
 export const signIn = async (req, res) => {
     try {
-        const { usernameORemail, password, stayConnected } = req.body;
+        const { pseudo, password, stayConnected } = req.body;
 
-        const user = await ProfileModel.findOne({
-            $or: [{ username: usernameORemail }, { email: usernameORemail }],
-        });
+        const user = await ProfileModel.findOne({pseudo : pseudo});
         if (!user) {
             return res.status(400).json({ msg: "Utilisateur non trouvé." });
         }
@@ -79,32 +71,7 @@ export const tokenIsValid = async (req, res) => {
     }
 };
 
-export const getUserData = async (req, res) => {
-    const user = await ProfileModel.findById(req.user);
-    res.json({ user: user._doc, token: req.token });
-};
-
-export const getHelloWorld = async (req, res) => {
-    res.status(200).json({msg: "Hello World !"});
-};
-
-export const getProfile = async (req, res) => {
-    //res.status(200).json({msg: "Hello World !"});
-    const profiles = await ProfileModel.find();
-    res.status(200).json(profiles);
-}
-
-export const setProfile = async (req, res) => {
-
-    // res.status(200).json({msg: "Hello World !"});
-    try{
-        const {pseudo, password, devise, solde} = req.body;
-        const profile = new ProfileModel({pseudo, password, devise, solde});
-        await profile.save();
-        res.send('Nouvel objet ajouté à la base de données');
-    }catch (err){
-        console.error(err);
-        res.status(500).json({error : err.message});
-    }
-    
-}
+// export const getUserData = async (req, res) => {
+//     const user = await ProfileModel.findById(req.user);
+//     res.json({ user: user._doc, token: req.token });
+// };
