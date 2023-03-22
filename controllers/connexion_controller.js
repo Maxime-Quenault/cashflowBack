@@ -78,17 +78,8 @@ export const tokenIsValid = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
     try{
-        const {pseudo, password, devise, solde} = req.body;
-
-        const hashedPassword = await bcryptjs.hash(password, 8);
-        let user = new ProfileModel({
-            pseudo,
-            password: hashedPassword,
-            devise,
-            solde,
-        });
-
-        user.deleteOne();
+        const {pseudo} = req.body;
+        ProfileModel.deleteOne({pseudo : pseudo});
         res.json({ msg: "Compte supprimé" });
     } catch (e) {
         res.status(500).json({ error: e.message });
