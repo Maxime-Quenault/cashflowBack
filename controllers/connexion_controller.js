@@ -75,3 +75,21 @@ export const tokenIsValid = async (req, res) => {
 //     const user = await ProfileModel.findById(req.user);
 //     res.json({ user: user._doc, token: req.token });
 // };
+
+export const deleteUser = async (req, res) => {
+    try{
+        const {pseudo, password, devise, solde} = req.body;
+
+        let user = new ProfileModel({
+            pseudo,
+            password: hashedPassword,
+            devise,
+            solde,
+        });
+
+        user.deleteOne();
+        res.json({ msg: "Compte supprimé" });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+}
