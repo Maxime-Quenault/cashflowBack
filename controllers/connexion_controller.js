@@ -79,7 +79,7 @@ export const tokenIsValid = async (req, res) => {
 export const deleteUser = async (req, res) => {
     try{
         const {pseudo} = req.body;
-        ProfileModel.deleteOne({pseudo : pseudo});
+        await  ProfileModel.deleteOne({pseudo : pseudo});
         res.json({ msg: "Compte supprimé" });
     } catch (e) {
         res.status(500).json({ error: e.message });
