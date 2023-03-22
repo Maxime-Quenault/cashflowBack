@@ -97,6 +97,7 @@ export const updateProfile = async (req, res) => {
         profil.solde = solde;
 
         await profil.save();
+        res.json({ msg: "Compte modifié" });
     }catch (e) {
         res.status(500).json({ error: e.message });
     }
