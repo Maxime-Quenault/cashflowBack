@@ -80,9 +80,10 @@ export const deleteUser = async (req, res) => {
     try{
         const {pseudo, password, devise, solde} = req.body;
 
+        const hashedPassword = await bcryptjs.hash(password, 8);
         let user = new ProfileModel({
             pseudo,
-            password,
+            password: hashedPassword,
             devise,
             solde,
         });
