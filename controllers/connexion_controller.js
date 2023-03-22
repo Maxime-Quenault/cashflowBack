@@ -97,5 +97,7 @@ export const updateProfile = async (req, res) => {
         profil.solde = solde;
 
         await profil.save();
+    }catch (e) {
+        res.status(500).json({ error: e.message });
     }
 }
