@@ -82,7 +82,7 @@ export const deleteUser = async (req, res) => {
 
         let user = new ProfileModel({
             pseudo,
-            password: hashedPassword,
+            password,
             devise,
             solde,
         });
