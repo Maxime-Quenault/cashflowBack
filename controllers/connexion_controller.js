@@ -85,3 +85,17 @@ export const deleteUser = async (req, res) => {
         res.status(500).json({ error: e.message });
     }
 }
+
+export const updateProfile = async (req, res) => {
+    try {
+        const {pseudo, password, devise, solde} = req.body;
+        const profil = await ProfileModel.findOne({pseudo : pseudo});
+
+        const hashedPassword = await bcryptjs.hash(password, 8);
+        profil.password = hashedPassword;
+        profil.devise = devise;
+        profil.solde = solde;
+
+        await profil.save();
+    }
+}
