@@ -95,7 +95,7 @@ export const verifIfMdpIsOK = async (req, res) => {
                 res.json({isOk : false});
             }
         });
-
+        res.json({ msg: "erreur dans la comparaison" });
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
@@ -113,8 +113,8 @@ export const updatePassword = async (req, res) =>{
 
         const hashedPassword = await bcryptjs.hash(newPassword, 8);
         profil.password = hashedPassword;
-        await ProfileModel.save(profil);
-
+        await profil.save();
+        res.json({ msg: "mdp modifié" });
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
