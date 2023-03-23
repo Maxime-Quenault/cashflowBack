@@ -1,7 +1,12 @@
 import ProfileModel from "../models/profile.model.js";
 import bcryptjs from "bcryptjs";
-import jwt from "jsonwebtoken";
 
+/**
+ * Cette methode permet de creer un nouvel user dans la base de données.
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 export const signUp = async (req, res) => {
     try {
         const {pseudo, password, devise, solde} = req.body;
@@ -28,9 +33,15 @@ export const signUp = async (req, res) => {
     }
 };
 
+/**
+ * Cette methode permet à l'utilisateur de se connecter, pour cela on vérifie que le password saisie est le bon.
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 export const signIn = async (req, res) => {
     try {
-        const { pseudo, password, stayConnected } = req.body;
+        const { pseudo, password } = req.body;
 
         const user = await ProfileModel.findOne({pseudo : pseudo});
         if (!user) {
@@ -45,37 +56,17 @@ export const signIn = async (req, res) => {
             return res.status(400).json({ msg: "Mot de passe incorrect." });
         }
 
-        const token = jwt.sign(
-            { id: user._id },
-            process.env.JWT_SECRET,
-            stayConnected ? { expiresIn: "7d" } : { expiresIn: "1h" }
-        );
         res.json({ user, token });
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
 };
 
-export const tokenIsValid = async (req, res) => {
-    try {
-        const token = req.header("x-auth-token");
-        if (!token) return res.json(false);
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
-        if (!verified) return res.json(false);
-
-        const user = await ProfileModel.findById(verified.id);
-        if (!user) return res.json(false);
-        res.json(true);
-    } catch (e) {
-        res.status(500).json({ error: e.message });
-    }
-};
-
-// export const getUserData = async (req, res) => {
-//     const user = await ProfileModel.findById(req.user);
-//     res.json({ user: user._doc, token: req.token });
-// };
-
+/**
+ * Cette methode permet de supprimer un user de la base de données.
+ * @param {*} req 
+ * @param {*} res 
+ */
 export const deleteUser = async (req, res) => {
     try{
         const {pseudo} = req.body;
@@ -86,13 +77,59 @@ export const deleteUser = async (req, res) => {
     }
 }
 
-export const updateProfile = async (req, res) => {
+/**
+ * Cette methode permet de verifier que le mot de passe saisie par l'utilisateur correspond bien à son mod de passe actuel.
+ * @param {*} req 
+ * @param {*} res 
+ */
+export const verifIfMdpIsOK = async (req, res) => {
     try {
-        const {pseudo, password, devise, solde} = req.body;
+
+        const {pseudo, password} = req.body;
         const profil = await ProfileModel.findOne({pseudo : pseudo});
 
-        const hashedPassword = await bcryptjs.hash(password, 8);
+        bcryptjs.compare(password, profil.password, function(err, res) {
+            if (res) {
+                res.json({isOk : true});
+            } else {
+                res.json({isOk : false});
+            }
+        });
+
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+}
+
+/**
+ * Cette methode permet de mettre à jour le password d'un utilisateur.
+ * @param {*} req 
+ * @param {*} res 
+ */
+export const updatePassword = async (req, res) =>{
+    try{
+        const {pseudo, newPassword} = req.body;
+        const profil = await ProfileModel.findOne({pseudo : pseudo});
+
+        const hashedPassword = await bcryptjs.hash(newPassword, 8);
         profil.password = hashedPassword;
+        await ProfileModel.save(profil);
+
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+}
+
+/**
+ * Cette methode permet de modifier les valeurs benines d'un utilisateur (devise, solde)
+ * @param {*} req 
+ * @param {*} res 
+ */
+export const updateProfile = async (req, res) => {
+    try {
+        const {pseudo, devise, solde} = req.body;
+        const profil = await ProfileModel.findOne({pseudo : pseudo});
+
         profil.devise = devise;
         profil.solde = solde;
 

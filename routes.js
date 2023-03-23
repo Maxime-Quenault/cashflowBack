@@ -1,6 +1,5 @@
 import express from 'express';
-import { signUp, signIn, tokenIsValid, deleteUser, updateProfile } from './controllers/connexion_controller.js';
-import { auth } from './middlewares/auth.js';
+import { signUp, signIn, deleteUser, updateProfile, updatePassword, verifIfMdpIsOK } from './controllers/connexion_controller.js';
 
 const router = express.Router();
 
@@ -15,8 +14,9 @@ router.use(function (req, res, next) {
 // Auth routes
 router.post("/auth/signup", signUp);
 router.post("/auth/signin", signIn);
-router.post("/auth/tokenIsValid", tokenIsValid);
-router.post("/auth/deleteuser", deleteUser);
-router.post("/auth/updateuser", updateProfile);
+router.post("/update/deleteuser", deleteUser);
+router.post("/verif/verifpassword", verifIfMdpIsOK)
+router.post("/update/updatepassword", updatePassword);
+router.post("/update/updateuser", updateProfile);
 
 export default router;
