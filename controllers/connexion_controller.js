@@ -109,10 +109,10 @@ export const verifIfMdpIsOK = async (req, res) => {
  */
 export const updatePassword = async (req, res) =>{
     try{
-        const {pseudo, newPassword} = req.body;
+        const {pseudo, password} = req.body;
         const profil = await ProfileModel.findOne({pseudo : pseudo});
 
-        const hashedPassword = await bcryptjs.hash(newPassword, 8);
+        const hashedPassword = await bcryptjs.hash(password, 8);
         profil.password = hashedPassword;
         await profil.save();
         res.json({ msg: "mdp modifié" });
