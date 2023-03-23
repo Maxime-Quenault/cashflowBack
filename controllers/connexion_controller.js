@@ -90,7 +90,7 @@ export const verifIfMdpIsOK = async (req, res) => {
 
         const isPasswordCorrect = await bcryptjs.compare(
             password,
-            user.password
+            profil.password
         );
         if (!isPasswordCorrect) {
             return res.json({msg : false});
