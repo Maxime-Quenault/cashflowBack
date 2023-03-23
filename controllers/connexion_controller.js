@@ -56,7 +56,7 @@ export const signIn = async (req, res) => {
             return res.status(400).json({ msg: "Mot de passe incorrect." });
         }
 
-        res.json({ user, token });
+        res.json({ user });
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
