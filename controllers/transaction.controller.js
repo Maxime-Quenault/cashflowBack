@@ -41,9 +41,9 @@ export const updateTransaction = async (req, res) =>{
         transaction.category = category;
         transaction.dateOfTransaction = dateOfTransaction;
         
-        const res = await transaction.save(); 
+        const result = await transaction.save(); 
 
-        return res.json({res});
+        return res.json({result});
     } catch(e){
         return res.status(500).json({error: e.message});
     }
