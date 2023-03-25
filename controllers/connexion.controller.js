@@ -71,11 +71,12 @@ export const signIn = async (req, res) => {
  */
 export const deleteUser = async (req, res) => {
     try{
+        const { Types } = require('mongoose');
         const {pseudo} = req.body;
         const profile = ProfileModel.findOne({pseudo : pseudo});
         await  ProfileModel.deleteOne({pseudo : pseudo});
 
-        await transactionModel.deleteMany({_id: profile._id})
+        await transactionModel.deleteMany({_idProfile: Types.ObjectId(profile._id.toString())})
         res.json({ msg: "Compte supprimé" });
     } catch (e) {
         res.status(500).json({ error: e.message });
