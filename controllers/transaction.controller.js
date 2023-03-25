@@ -13,7 +13,8 @@ export const addTransaction = async (req, res) => {
         });
 
         await transaction.save();
-        return res.json({msg : "it's ok !"});
+        const listOfTransaction = await TransactionModel.find({_idProfile: _idProfile});
+        return res.json({listOfTransaction});
     } catch(e){
         res.status(500).json({error: e.message, msg: "it's not ok .."});
     }
