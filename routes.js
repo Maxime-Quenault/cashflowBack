@@ -1,5 +1,6 @@
 import express from 'express';
-import { signUp, signIn, deleteUser, updateProfile, updatePassword, verifIfMdpIsOK } from './controllers/connexion_controller.js';
+import { signUp, signIn, deleteUser, verifIfMdpIsOK } from './controllers/connexion_controller.js';
+import { updateProfile, updatePassword} from './controllers/update_controller.js';
 
 const router = express.Router();
 
