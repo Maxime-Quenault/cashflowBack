@@ -9,7 +9,7 @@ export const addTransaction = async (req, res) => {
             value,
             category,
             date,
-            _idProfile
+            _idProfil
         });
 
         await TransactionModel.bulkSave(transaction);
