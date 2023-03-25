@@ -31,4 +31,15 @@ export const getAllTransactionByIdProfile = async (req, res) => {
     }
 }
 
+export const updateTransaction = async (req, res) =>{
+    try{
+        const {_id} = req.body;
+
+        const transaction = await TransactionModel.findById(_id)
+        return transaction;
+    } catch(e){
+        return res.status(500).json({error: e.message});
+    }
+}
+
 
