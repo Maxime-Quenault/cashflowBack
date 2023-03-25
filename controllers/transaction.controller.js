@@ -43,7 +43,7 @@ export const updateTransaction = async (req, res) =>{
         
         await transaction.save(); 
 
-        const listOfTransaction = await TransactionModel.find({pseudoProfile: pseudoProfile});
+        const listOfTransaction = await TransactionModel.find({pseudoProfile: transaction.pseudoProfile});
         return res.json({listOfTransaction});
     } catch(e){
         return res.status(500).json({error: e.message});
@@ -52,7 +52,7 @@ export const updateTransaction = async (req, res) =>{
 
 export const deleteTransaction = async (req, res) =>{
     try{
-        const{_id} = req.body;
+        const{_id, pseudoProfile} = req.body;
         await TransactionModel.findByIdAndDelete(_id);
 
         const listOfTransaction = await TransactionModel.find({pseudoProfile: pseudoProfile});
