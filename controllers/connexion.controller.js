@@ -71,7 +71,6 @@ export const signIn = async (req, res) => {
  */
 export const deleteUser = async (req, res) => {
     try{
-        const { Types } = require('mongoose');
         const {pseudo} = req.body;
         const profile = ProfileModel.findOne({pseudo : pseudo});
         await  ProfileModel.deleteOne({pseudo : pseudo});
