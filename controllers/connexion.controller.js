@@ -75,7 +75,7 @@ export const deleteUser = async (req, res) => {
         const profile = ProfileModel.findOne({pseudo : pseudo});
         await  ProfileModel.deleteOne({pseudo : pseudo});
 
-        await transactionModel.deleteMany({_idProfile: String(profile._id)});
+        await transactionModel.deleteMany({pseudoProfile: pseudo});
         res.json({ msg: "Compte supprimé" });
     } catch (e) {
         res.status(500).json({ error: e.message });
