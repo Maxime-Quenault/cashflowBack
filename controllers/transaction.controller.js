@@ -36,7 +36,7 @@ export const updateTransaction = async (req, res) =>{
         const {_id} = req.body;
 
         const transaction = await TransactionModel.findById(_id)
-        return transaction;
+        return res.json({transaction});;
     } catch(e){
         return res.status(500).json({error: e.message});
     }
