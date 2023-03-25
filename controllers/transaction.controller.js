@@ -41,9 +41,22 @@ export const updateTransaction = async (req, res) =>{
         transaction.category = category;
         transaction.dateOfTransaction = dateOfTransaction;
         
-        const result = await transaction.save(); 
+        await transaction.save(); 
 
-        return res.json({result});
+        const listOfTransaction = await TransactionModel.find({pseudoProfile: pseudoProfile});
+        return res.json({listOfTransaction});
+    } catch(e){
+        return res.status(500).json({error: e.message});
+    }
+}
+
+export const deleteTransaction = async (req, res) =>{
+    try{
+        const{_id} = req.body;
+        await TransactionModel.findByIdAndDelete(_id);
+
+        const listOfTransaction = await TransactionModel.find({pseudoProfile: pseudoProfile});
+        return res.json({listOfTransaction});
     } catch(e){
         return res.status(500).json({error: e.message});
     }

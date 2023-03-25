@@ -1,6 +1,6 @@
 import express from 'express';
 import { signUp, signIn, deleteUser, verifIfMdpIsOK } from './controllers/connexion.controller.js';
-import { addTransaction, getAllTransactionByIdProfile,updateTransaction } from './controllers/transaction.controller.js';
+import { addTransaction, deleteTransaction, getAllTransactionByIdProfile,updateTransaction } from './controllers/transaction.controller.js';
 import { updateProfile, updatePassword} from './controllers/update_profile.controller.js';
 
 const router = express.Router();
@@ -23,5 +23,6 @@ router.post("/update/updateuser", updateProfile);
 router.post("/transaction/add", addTransaction);
 router.post("/transaction/findbyprofile", getAllTransactionByIdProfile);
 router.post("/transaction/updatetransaction", updateTransaction)
+router.post("/transaction/delete", deleteTransaction);
 
 export default router;
