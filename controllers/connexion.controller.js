@@ -1,5 +1,6 @@
 import ProfileModel from "../models/profile.model.js";
 import bcryptjs from "bcryptjs";
+import transactionModel from "../models/transaction.model.js";
 
 /**
  * Cette methode permet de creer un nouvel user dans la base de données.
@@ -71,7 +72,10 @@ export const signIn = async (req, res) => {
 export const deleteUser = async (req, res) => {
     try{
         const {pseudo} = req.body;
+        const profile = ProfileModel.findOne({pseudo : pseudo});
         await  ProfileModel.deleteOne({pseudo : pseudo});
+
+        await transactionModel.deleteMany({_idProfile: profile._idProfile})
         res.json({ msg: "Compte supprimé" });
     } catch (e) {
         res.status(500).json({ error: e.message });
