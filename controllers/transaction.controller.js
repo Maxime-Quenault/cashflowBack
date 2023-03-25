@@ -2,14 +2,14 @@ import TransactionModel from "../models/transaction.model.js";
 
 export const addTransaction = async (req, res) => {
     try{
-        const {title, value, category, date, _idProfil} = req.body;
+        const {title, value, category, dateOfTransaction, _idProfile} = req.body;
 
         let transaction = new TransactionModel({
             title,
             value,
             category,
-            date,
-            _idProfil
+            dateOfTransaction,
+            _idProfile
         });
 
         await transaction.save();
