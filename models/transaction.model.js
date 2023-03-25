@@ -6,7 +6,7 @@ const transactionSchema = new mongoose.Schema(
         title: {type: String, required: true, trim: true},
         category: {type: String, required: true, trim: true},
         dateOfTransaction: {type: String, required: true, trim: true},
-        _idProfile: {type: String, required: true, trim: true}
+        pseudoProfile: {type: String, required: true, trim: true}
     },
     {
         collection: 'transactions',
