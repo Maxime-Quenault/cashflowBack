@@ -33,10 +33,17 @@ export const getAllTransactionByIdProfile = async (req, res) => {
 
 export const updateTransaction = async (req, res) =>{
     try{
-        const {_id} = req.body;
+        const {_id, title, value, category, dateOfTransaction} = req.body;
+        const transaction = await TransactionModel.findById(_id);
 
-        const transaction = await TransactionModel.findById(_id)
-        return res.json({transaction});;
+        transaction.title = title;
+        transaction.value = value;
+        transaction.category = category;
+        transaction.dateOfTransaction = dateOfTransaction;
+        
+        const res = await transaction.save(); 
+
+        return res.json({res});
     } catch(e){
         return res.status(500).json({error: e.message});
     }
