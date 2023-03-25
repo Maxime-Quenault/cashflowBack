@@ -23,17 +23,8 @@ export const getAllTransactionByIdProfile = async (req, res) => {
     try{
         const {_idProfile} = req.body;
 
-        TransactionModel.find({_idProfile: _idProfile},
-            (err, listOfTransaction))
-                .then((listOfTransaction) =>{
-                    return res.json({listOfTransaction});
-                })
-                .catch((err) =>{
-                    console.error(err);
-                    return res.status(500).json({ error: 'Une erreur s\'est produite lors de la recherche des transactions.' });
-                });
-                
-
+        const listOfTransaction = await TransactionModel.find({_idProfile: _idProfile});
+        return res.json({listOfTransaction});
     }catch(e){
         return res.status(500).json({error: e.message});
     }
