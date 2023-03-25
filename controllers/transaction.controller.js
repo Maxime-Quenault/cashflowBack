@@ -17,6 +17,25 @@ export const addTransaction = async (req, res) => {
     } catch(e){
         res.status(500).json({error: e.message, msg: "it's not ok .."});
     }
-};
+}
+
+export const getAllTransactionByIdProfile = async (req, res) => {
+    try{
+        const {_idProfile} = req.body;
+
+        TransactionModel.find({_idProfile: _idProfile},
+            (err, listOfTransaction) =>{
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ error: 'Une erreur s\'est produite lors de la recherche des transactions.' });
+                }
+
+                return res.json({listOfTransaction});
+            }) 
+
+    }catch(e){
+        return res.status(500).json({error: e.message});
+    }
+}
 
 
