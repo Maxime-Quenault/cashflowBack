@@ -14,7 +14,7 @@ export const updatePassword = async (req, res) =>{
         const hashedPassword = await bcryptjs.hash(password, 8);
         profil.password = hashedPassword;
         await profil.save();
-        res.json({ msg: "mdp modifié" });
+        res.json({profil});
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
@@ -34,7 +34,7 @@ export const updateProfile = async (req, res) => {
         profil.solde = solde;
 
         await profil.save();
-        res.json({ msg: "Compte modifié" });
+        res.json({profil});
     }catch (e) {
         res.status(500).json({ error: e.message });
     }
