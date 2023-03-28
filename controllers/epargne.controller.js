@@ -45,7 +45,7 @@ export const updateEpargne = async (req, res) =>{
         
         await epargne.save(); 
 
-        const listOfEpargne = await epargneModel.find({pseudoProfile: epargneModel.pseudoProfile});
+        const listOfEpargne = await epargneModel.find({pseudoProfile: epargne.pseudoProfile});
         return res.json({listOfEpargne});
     } catch(e){
         return res.status(500).json({error: e.message});
