@@ -34,7 +34,7 @@ export const getAllEpargneByProfile = async (req, res) => {
 
 export const updateEpargne = async (req, res) =>{
     try{
-        const {_id, title, objective, dateStart, nbDays, sum, pseudoProfile} = req.body;
+        const {_id, title, objective, dateStart, nbDays, sum} = req.body;
         const epargne = await epargneModel.findById(_id);
 
         epargne.title = title;
@@ -45,7 +45,7 @@ export const updateEpargne = async (req, res) =>{
         
         await epargne.save(); 
 
-        const listOfEpargne = await epargneModel.find({pseudoProfile: pseudoProfile});
+        const listOfEpargne = await epargneModel.find({pseudoProfile: epargneModel.pseudoProfile});
         return res.json({listOfEpargne});
     } catch(e){
         return res.status(500).json({error: e.message});
