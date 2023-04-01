@@ -15,8 +15,7 @@ export const signUp = async (req, res) => {
         const existingUserWithUsername = await ProfileModel.findOne({ pseudo: pseudo });
         if (existingUserWithUsername) {
             return res
-                .status(400)
-                .json({ msg: "Pseudo déjà utilisé." });
+                .json({ msg: "pseudo" });
         }
 
         const hashedPassword = await bcryptjs.hash(password, 8);
@@ -29,7 +28,7 @@ export const signUp = async (req, res) => {
         });
         await user.save();
         const user_res = await ProfileModel.findOne({pseudo : pseudo}); 
-        res.json(user_res);
+        res.json(user_res,{ msg: "ok" });
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
@@ -46,17 +45,6 @@ export const signIn = async (req, res) => {
         const { pseudo, password } = req.body;
 
         const user = await ProfileModel.findOne({pseudo : pseudo});
-        if (!user) {
-            return res.status(400).json({ msg: "Utilisateur non trouvé." });
-        }
-
-        const isPasswordCorrect = await bcryptjs.compare(
-            password,
-            user.password
-        );
-        if (!isPasswordCorrect) {
-            return res.status(400).json({ msg: "Mot de passe incorrect." });
-        }
 
         res.json({ user });
     } catch (e) {
