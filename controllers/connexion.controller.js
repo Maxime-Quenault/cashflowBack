@@ -92,16 +92,18 @@ export const verifIfMdpIsOK = async (req, res) => {
 
         const {pseudo, password} = req.body;
         const profil = await ProfileModel.findOne({pseudo : pseudo});
-
-        const isPasswordCorrect = await bcryptjs.compare(
-            password,
-            profil.password
-        );
-        if (!isPasswordCorrect) {
-            return res.json({msg : false});
-        }else{
-            return res.json({msg : true});
+        if( profil != null){
+            const isPasswordCorrect = await bcryptjs.compare(
+                password,
+                profil.password
+            );
+            if (!isPasswordCorrect) {
+                return res.json({boolean : false, cause: "password"});
+            }else{
+                return res.json({boolean : true});
+            }
         }
+        return res.json({boolean : false, cause: "pseudo"});
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
