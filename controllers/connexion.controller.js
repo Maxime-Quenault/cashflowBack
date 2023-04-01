@@ -28,7 +28,7 @@ export const signUp = async (req, res) => {
         });
         await new_user.save();
         const user = await ProfileModel.findOne({pseudo : pseudo}); 
-        res.json({user},{ msg: "ok" });
+        res.json(user);
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
