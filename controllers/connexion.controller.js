@@ -20,15 +20,15 @@ export const signUp = async (req, res) => {
 
         const hashedPassword = await bcryptjs.hash(password, 8);
 
-        let user = new ProfileModel({
+        let new_user = new ProfileModel({
             pseudo,
             password: hashedPassword,
             devise,
             solde,
         });
-        await user.save();
-        const user_res = await ProfileModel.findOne({pseudo : pseudo}); 
-        res.json(user_res,{ msg: "ok" });
+        await new_user.save();
+        const user = await ProfileModel.findOne({pseudo : pseudo}); 
+        res.json({user},{ msg: "ok" });
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
